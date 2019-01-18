@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>OQS</RootNamespace>
+    <PostBuildEvent></PostBuildEvent>
+    <PreBuildEvent>copy $(SolutionDir)oqs.dll $(TargetDir)</PreBuildEvent>
+  </PropertyGroup>
+
+</Project>

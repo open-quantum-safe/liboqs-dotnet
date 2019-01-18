@@ -1,0 +1,12 @@
+# dependencies
+oqs.dll
+
+# visual studio files
+.vs/
+TestResults/
+bin/
+obj/
+
+# backup filesd
+
+*~
