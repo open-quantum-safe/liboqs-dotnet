@@ -1,7 +1,7 @@
-liboqs-csharp
+liboqs-dotnet
 =============
 
-**liboqs-csharp** is a .NET wrapper in C# for liboqs, providing quantum-resistant cryptographic algorithms.
+**liboqs-dotnet** is a .NET wrapper in C# for liboqs, providing quantum-resistant cryptographic algorithms.
 
 Overview
 --------
@@ -10,7 +10,7 @@ The **Open Quantum Safe (OQS) project** has the goal of developing and prototypi
 
 **liboqs** is an open source C library for quantum-resistant cryptographic algorithms.  See more about liboqs at [https://github.com/open-quantum-safe/liboqs/](https://github.com/open-quantum-safe/liboqs/), including a list of supported algorithms.
 
-**liboqs-csharp** is an open source .NET wrapper in C# for the liboqs C library for quantum-resistant cryptographic algorithms.  liboqs-csharp provides:
+**liboqs-dotnet** is an open source .NET wrapper in C# for the liboqs C library for quantum-resistant cryptographic algorithms.  liboqs-dotnet provides:
 
 - a common API for post-quantum key encapsulation mechanisms and digital signature schemes
 - a collection of open source implementations of post-quantum cryptography algorithms
@@ -19,7 +19,7 @@ The OQS project also provides prototype integrations into application-level prot
 
 More information on OQS can be found on our website: [https://openquantumsafe.org/](https://openquantumsafe.org/).
 
-liboqs-csharp
+liboqs-dotnet
 -------------
 
 This solution implements a .NET wrapper in C# for the C OQS library. It contains the following projects:
@@ -31,13 +31,13 @@ This solution implements a .NET wrapper in C# for the C OQS library. It contains
 Limitations and security
 ------------------------
 
-liboqs and liboqs-csharp are designed for prototyping and evaluating quantum-resistant cryptography.  Security of proposed quantum-resistant algorithms may rapidly change as research advances, and may ultimately be completely insecure against either classical or quantum computers.
+liboqs and liboqs-dotnet are designed for prototyping and evaluating quantum-resistant cryptography.  Security of proposed quantum-resistant algorithms may rapidly change as research advances, and may ultimately be completely insecure against either classical or quantum computers.
 
 We believe that the NIST Post-Quantum Cryptography standardization project is currently the best avenue to identifying potentially quantum-resistant algorithms.  liboqs does not intend to "pick winners", and we strongly recommend that applications and protocols rely on the outcomes of the NIST standardization project when deploying post-quantum cryptography.
 
 We acknowledge that some parties may want to begin deploying post-quantum cryptography prior to the conclusion of the NIST standardization project.  We strongly recommend that any attempts to do make use of so-called **hybrid cryptography**, in which post-quantum public-key algorithms are used alongside traditional public key algorithms (like RSA or elliptic curves) so that the solution is at least no less secure than existing traditional cryptography.
 
-liboqs-csharp is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs-csharp/blob/master/LICENSE.txt) for the full disclaimer.
+liboqs-dotnet is provided "as is", without warranty of any kind.  See [LICENSE.txt](https://github.com/open-quantum-safe/liboqs-dotnet/blob/master/LICENSE.txt) for the full disclaimer.
 
 Building
 --------
@@ -46,22 +46,22 @@ Builds have been tested manually on Windows 10 and with Visual Studio 2017 (Comm
 
 ### Step 0: Prerequisites
 
-To build the .NET OQS wrapper you need a .NET development environment; see the Getting Started section on the [.NET Core](https://dotnet.github.io/) GitHub page for more information. 
+To build the .NET OQS wrapper you need a .NET development environment; see the Getting Started section on the [.NET Core](https://dotnet.github.io/) GitHub page for more information.
 
 The wrapper targets version 1.1 of the .NET Core, which can be obtained [here](https://dotnet.microsoft.com/download/dotnet-core/1.1).
 
 ### Step 1: Build liboqs
 
-The master branch of the OQS library must be obtained and compiled into a DLL for the target platform before building the liboqs-csharp solution.
+The master branch of the OQS library must be obtained and compiled into a DLL for the target platform before building the liboqs-dotnet solution.
 
 1. Download and unzip the [liboqs master branch archive](https://github.com/open-quantum-safe/liboqs/archive/master.zip). By default the contents will be into a `liboqs-master` folder.
 2. Build the DLL target of the OQS solution, either using Visual Studio or on the command line:
 
 		msbuild liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
-		
+
 3. Copy the liboqs DLL into the base dotnetOQS solution directory:
 
-		copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-csharp\
+		copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\
 
 See the [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs#building-and-running-on-windows) for more information on building the library on Windows.
 
@@ -87,11 +87,11 @@ If you are experiencing issues building liboqs or the .NET wrapper on the comman
 License
 -------
 
-liboqs-csharp is licensed under the MIT License; see [LICENSE.txt](https://github.com/open-quantum-safe/liboqs-csharp/blob/master/LICENSE.txt) for details.
+liboqs-dotnet is licensed under the MIT License; see [LICENSE.txt](https://github.com/open-quantum-safe/liboqs-dotnet/blob/master/LICENSE.txt) for details.
 
 Team
 ----
 
 The Open Quantum Safe project is led by [Douglas Stebila](https://www.douglas.stebila.ca/research/) and [Michele Mosca](http://faculty.iqc.uwaterloo.ca/mmosca/) at the University of Waterloo.
 
-liboqs-csharp was developed by [Christian Paquin](https://www.microsoft.com/en-us/research/people/cpaquin/) at Microsoft Research.
+liboqs-dotnet was developed by [Christian Paquin](https://www.microsoft.com/en-us/research/people/cpaquin/) at Microsoft Research.
