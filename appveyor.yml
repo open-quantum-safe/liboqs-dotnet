@@ -3,7 +3,16 @@ image: Visual Studio 2017
 configuration: Release
 clone_folder: C:\projects
 init:
-- cmd: del /f /s /q c:\projects 1>nul
+- cmd: >-
+    del /f /s /q c:\projects 1>nul
+
+    appveyor downloadfile https://github.com/open-quantum-safe/liboqs/archive/master.zip
+
+    7z e liboqs-master.zip -y
+
+    msbuild liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
+
+    copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
