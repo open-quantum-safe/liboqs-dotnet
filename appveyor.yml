@@ -8,7 +8,7 @@ init:
 
     appveyor downloadfile https://github.com/open-quantum-safe/liboqs/archive/master.zip
 
-    7z e liboqs-master.zip -y
+    7z e c:\projects\liboqs-master.zip -y
 
     msbuild liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
 
