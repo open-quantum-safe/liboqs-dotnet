@@ -1,0 +1,21 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+clone_folder: C:\projects
+init:
+- cmd: del /f /s /q c:\projects 1>nul
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+install:
+- cmd: appveyor downloadfile https://dist.nuget.org/win-x86-commandline/v4.3.0/nuget.exe
+before_build:
+- cmd: dotnet restore
+build:
+  project: dotnetOQS.sln
+  verbosity: minimal
