@@ -12,9 +12,11 @@ init:
     
     7z e c:\projects\master.zip -y
 
-    msbuild liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
+    dir
+    
+    msbuild c:\projects\liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
 
-    copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\
+    copy c:\projects\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\liboqs-dotnet\
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
