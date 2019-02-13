@@ -7,7 +7,9 @@ init:
     del /f /s /q c:\projects 1>nul
 
     mkdir c:\lib
+    
     cd c:\lib
+    
     appveyor downloadfile https://github.com/open-quantum-safe/liboqs/archive/master.zip
 
     7z x c:\lib\master.zip 
