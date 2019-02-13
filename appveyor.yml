@@ -16,8 +16,6 @@ init:
     
     msbuild c:\lib\liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
     
-    mkdir c:\projects
-    
     cd c:\projects
 dotnet_csproj:
   patch: true
