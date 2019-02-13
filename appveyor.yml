@@ -8,9 +8,11 @@ init:
 
     appveyor downloadfile https://github.com/open-quantum-safe/liboqs/archive/master.zip
 
-    mkdir liboqs-master
+    mkdir c:\projects\liboqs-master
 
     7z e c:\projects\master.zip -y -oc:\projects\liboqs-master
+    
+    dir c:\projects\liboqs-master
     
     dir c:\projects\liboqs-master\VisualStudio
 
