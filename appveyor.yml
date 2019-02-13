@@ -10,7 +10,7 @@ init:
 
     mkdir liboqs-master
 
-    7z e c:\projects\master.zip -y -o c:\projects\liboqs-master
+    7z e c:\projects\master.zip -y -oc:\projects\liboqs-master
 
     msbuild c:\projects\liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
 dotnet_csproj:
