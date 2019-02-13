@@ -16,6 +16,8 @@ init:
     
     msbuild c:\lib\liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
     
+    dir c:\lib\liboqs-master\VisualStudio\
+    
     cd c:\projects
 dotnet_csproj:
   patch: true
@@ -27,6 +29,8 @@ dotnet_csproj:
   informational_version: '{version}'
 before_build:
 - cmd: >-
+    dir c:\projects\liboqs-dotnet
+    
     copy c:\lib\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\liboqs-dotnet\
     
     dotnet restore
