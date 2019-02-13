@@ -28,6 +28,7 @@ dotnet_csproj:
 before_build:
 - cmd: >-
     copy c:\lib\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\liboqs-dotnet\
+    
     dotnet restore
 build:
   project: dotnetOQS.sln
