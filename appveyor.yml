@@ -8,15 +8,11 @@ init:
 
     appveyor downloadfile https://github.com/open-quantum-safe/liboqs/archive/master.zip
 
-    dir
-    
-    7z e c:\projects\master.zip -y
+    mkdir liboqs-master
 
-    dir
-    
+    7z e c:\projects\master.zip -y -o c:\projects\liboqs-master
+
     msbuild c:\projects\liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
-
-    copy c:\projects\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\liboqs-dotnet\
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -26,7 +22,9 @@ dotnet_csproj:
   file_version: '{version}'
   informational_version: '{version}'
 before_build:
-- cmd: dotnet restore
+- cmd: >-
+    copy c:\projects\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\liboqs-dotnet\
+    dotnet restore
 build:
   project: dotnetOQS.sln
   verbosity: minimal
