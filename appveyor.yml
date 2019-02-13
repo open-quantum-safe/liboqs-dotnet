@@ -29,8 +29,6 @@ dotnet_csproj:
   informational_version: '{version}'
 before_build:
 - cmd: >-
-    dir c:\projects\liboqs-dotnet
-    
     copy c:\lib\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\
     
     dotnet restore
