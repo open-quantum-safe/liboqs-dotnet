@@ -1,0 +1,37 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+clone_folder: C:\projects
+init:
+- cmd: >-
+    del /f /s /q c:\projects 1>nul
+
+    mkdir c:\lib
+    
+    cd c:\lib
+    
+    appveyor downloadfile https://github.com/open-quantum-safe/liboqs/archive/master.zip
+
+    7z x c:\lib\master.zip 
+    
+    msbuild c:\lib\liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
+    
+    dir c:\lib\liboqs-master\VisualStudio\x64\ReleaseDLL\
+    
+    cd c:\projects
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- cmd: >-
+    copy c:\lib\liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll c:\projects\
+    
+    dotnet restore
+build:
+  project: dotnetOQS.sln
+  verbosity: minimal
