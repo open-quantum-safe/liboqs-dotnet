@@ -99,9 +99,9 @@ namespace dotnetOQSUnitTest
         }
 
         [TestMethod]
-        public void TestKEMFrodokem640cshake()
+        public void TestKEMFrodokem640shake()
         {
-            TestKEM("FrodoKEM-640-cSHAKE");
+            TestKEM("FrodoKEM-640-SHAKE");
         }
 
         [TestMethod]
@@ -111,21 +111,33 @@ namespace dotnetOQSUnitTest
         }
 
         [TestMethod]
-        public void TestKEMFrodokem976cshake()
+        public void TestKEMFrodokem976shake()
         {
-            TestKEM("FrodoKEM-976-cSHAKE");
+            TestKEM("FrodoKEM-976-SHAKE");
+        }
+
+        [TestMethod]
+        public void TestKEMFrodokem1344aes()
+        {
+            TestKEM("FrodoKEM-1344-AES");
+        }
+
+        [TestMethod]
+        public void TestKEMFrodokem1344shake()
+        {
+            TestKEM("FrodoKEM-1344-SHAKE");
         }
 
         [TestMethod]
         public void TestKEMNewhope512CCA()
         {
-            TestKEM("NewHope-512-CCA-KEM");
+            TestKEM("NewHope-512-CCA");
         }
 
         [TestMethod]
         public void TestKEMNewhope1024CCA()
         {
-            TestKEM("NewHope-1024-CCA-KEM");
+            TestKEM("NewHope-1024-CCA");
         }
 
         [TestMethod]
