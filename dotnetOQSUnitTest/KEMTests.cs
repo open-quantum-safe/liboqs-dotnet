@@ -2,6 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQuantumSafe;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace dotnetOQSUnitTest
 {
@@ -56,7 +57,7 @@ namespace dotnetOQSUnitTest
             byte[] wrong_ciphertext = new byte[ciphertext.Length];
             random.NextBytes(wrong_ciphertext);
             log("wrong_ciphertext: " + BytesToHex(wrong_ciphertext));
-            try { 
+            try {
                 kem.decaps(out shared_secret_2, wrong_ciphertext, secret_key);
                 // if the wrong value didn't trigger an exception, make sure the shared secret do not match
                 Assert.IsFalse(shared_secret_1.SequenceEqual(shared_secret_2), "wrong ciphertext, shared secrets should have been different");
@@ -67,7 +68,7 @@ namespace dotnetOQSUnitTest
             }
 
             // wrong secret key
-            byte[] wrong_secret_key= new byte[secret_key.Length];
+            byte[] wrong_secret_key = new byte[secret_key.Length];
             random.NextBytes(wrong_secret_key);
             log("wrong_secret_key: " + BytesToHex(wrong_secret_key));
             try
@@ -93,75 +94,21 @@ namespace dotnetOQSUnitTest
         }
 
         [TestMethod]
-        public void TestKEMFrodokem640aes()
+        public void TestAllKEMs()
         {
-            TestKEM("FrodoKEM-640-AES");
-        }
+            var failedAlgs = new List<string>();
+            foreach (string kem in KEM.EnabledMechanisms)
+            {
+                try {
+                    TestKEM(kem);
+                }
+                catch (Exception)
+                {
+                    failedAlgs.Add(kem);
+                }
 
-        [TestMethod]
-        public void TestKEMFrodokem640shake()
-        {
-            TestKEM("FrodoKEM-640-SHAKE");
-        }
-
-        [TestMethod]
-        public void TestKEMFrodokem976aes()
-        {
-            TestKEM("FrodoKEM-976-AES");
-        }
-
-        [TestMethod]
-        public void TestKEMFrodokem976shake()
-        {
-            TestKEM("FrodoKEM-976-SHAKE");
-        }
-
-        [TestMethod]
-        public void TestKEMFrodokem1344aes()
-        {
-            TestKEM("FrodoKEM-1344-AES");
-        }
-
-        [TestMethod]
-        public void TestKEMFrodokem1344shake()
-        {
-            TestKEM("FrodoKEM-1344-SHAKE");
-        }
-
-        [TestMethod]
-        public void TestKEMNewhope512CCA()
-        {
-            TestKEM("NewHope-512-CCA");
-        }
-
-        [TestMethod]
-        public void TestKEMNewhope1024CCA()
-        {
-            TestKEM("NewHope-1024-CCA");
-        }
-
-        [TestMethod]
-        public void TestKEMSIDHp503()
-        {
-            TestKEM("Sidh-p503");
-        }
-
-        [TestMethod]
-        public void TestKEMSIDHp751()
-        {
-            TestKEM("Sidh-p751");
-        }
-
-        [TestMethod]
-        public void TestKEMSIKEp503()
-        {
-            TestKEM("Sike-p503");
-        }
-
-        [TestMethod]
-        public void TestKEMSIKEp751()
-        {
-            TestKEM("Sike-p751");
+                Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
+            }
         }
 
         [TestMethod]

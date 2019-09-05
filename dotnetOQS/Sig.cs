@@ -49,6 +49,9 @@ namespace OpenQuantumSafe
 
         [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_SIG_alg_count();
+
+        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        extern private static int OQS_SIG_alg_is_enabled(string method_name);
         #endregion
 
         /// <summary>
@@ -76,12 +79,9 @@ namespace OpenQuantumSafe
                 string alg = Marshal.PtrToStringAnsi(OQS_SIG_alg_identifier(i));
                 supported.Add(alg);
                 // determine if the alg is enabled
-
-                IntPtr kemPtr = OQS_SIG_new(alg);
-                if (kemPtr != IntPtr.Zero)
+                if (OQS_SIG_alg_is_enabled(alg) == 1)
                 {
                     enabled.Add(alg);
-                    OQS_SIG_free(kemPtr);
                 }
             }
             EnabledMechanisms = enabled.ToImmutableList<string>();

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQuantumSafe;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace dotnetOQSUnitTest
 {
@@ -79,39 +80,22 @@ namespace dotnetOQSUnitTest
         }
 
         [TestMethod]
-        public void TestSigPicnicL1FS()
+        public void TestAllSigs()
         {
-            TestSig("picnic_L1_FS");
-        }
+            var failedAlgs = new List<string>();
+            foreach (string sig in Sig.EnabledMechanisms)
+            {
+                try
+                {
+                    TestSig(sig);
+                }
+                catch (Exception)
+                {
+                    failedAlgs.Add(sig);
+                }
 
-        [TestMethod]
-        public void TestSigPicnicL1UR()
-        {
-            TestSig("picnic_L1_UR");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL3FS()
-        {
-            TestSig("picnic_L3_FS");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL3UR()
-        {
-            TestSig("picnic_L3_UR");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL5FS()
-        {
-            TestSig("picnic_L5_FS");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL5UR()
-        {
-            TestSig("picnic_L5_UR");
+                Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
+            }
         }
 
         [TestMethod]
