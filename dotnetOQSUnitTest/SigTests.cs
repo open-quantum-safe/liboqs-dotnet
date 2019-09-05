@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQuantumSafe;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace dotnetOQSUnitTest
 {
@@ -81,9 +82,19 @@ namespace dotnetOQSUnitTest
         [TestMethod]
         public void TestAllSigs()
         {
+            var failedAlgs = new List<string>();
             foreach (string sig in Sig.EnabledMechanisms)
             {
-                TestSig(sig);
+                try
+                {
+                    TestSig(sig);
+                }
+                catch (Exception)
+                {
+                    failedAlgs.Add(sig);
+                }
+
+                Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
             }
         }
 

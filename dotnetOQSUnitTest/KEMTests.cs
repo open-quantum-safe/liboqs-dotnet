@@ -2,6 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQuantumSafe;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace dotnetOQSUnitTest
 {
@@ -95,9 +96,18 @@ namespace dotnetOQSUnitTest
         [TestMethod]
         public void TestAllKEMs()
         {
+            var failedAlgs = new List<string>();
             foreach (string kem in KEM.EnabledMechanisms)
             {
-                TestKEM(kem);
+                try {
+                    TestKEM(kem);
+                }
+                catch (Exception e)
+                {
+                    failedAlgs.Add(kem);
+                }
+
+                Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
             }
         }
 
