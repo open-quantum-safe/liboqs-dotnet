@@ -102,7 +102,7 @@ namespace dotnetOQSUnitTest
                 try {
                     TestKEM(kem);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     failedAlgs.Add(kem);
                 }
