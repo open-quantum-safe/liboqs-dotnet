@@ -79,39 +79,12 @@ namespace dotnetOQSUnitTest
         }
 
         [TestMethod]
-        public void TestSigPicnicL1FS()
+        public void TestAllSigs()
         {
-            TestSig("picnic_L1_FS");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL1UR()
-        {
-            TestSig("picnic_L1_UR");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL3FS()
-        {
-            TestSig("picnic_L3_FS");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL3UR()
-        {
-            TestSig("picnic_L3_UR");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL5FS()
-        {
-            TestSig("picnic_L5_FS");
-        }
-
-        [TestMethod]
-        public void TestSigPicnicL5UR()
-        {
-            TestSig("picnic_L5_UR");
+            foreach (string sig in Sig.EnabledMechanisms)
+            {
+                TestSig(sig);
+            }
         }
 
         [TestMethod]
