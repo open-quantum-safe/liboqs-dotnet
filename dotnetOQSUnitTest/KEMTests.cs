@@ -62,7 +62,7 @@ namespace dotnetOQSUnitTest
                 // if the wrong value didn't trigger an exception, make sure the shared secret do not match
                 Assert.IsFalse(shared_secret_1.SequenceEqual(shared_secret_2), "wrong ciphertext, shared secrets should have been different");
             }
-            catch (OQSException)
+            catch (Exception)
             {
                 // exception expected
             }
@@ -77,7 +77,7 @@ namespace dotnetOQSUnitTest
                 // if the wrong value didn't trigger an exception, make sure the shared secret do not match
                 Assert.IsFalse(shared_secret_1.SequenceEqual(shared_secret_2), "wrong ciphertext, shared secrets should have been different");
             }
-            catch (OQSException)
+            catch (Exception)
             {
                 // exception expected
             }
@@ -106,9 +106,8 @@ namespace dotnetOQSUnitTest
                 {
                     failedAlgs.Add(kem);
                 }
-
-                Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
             }
+            Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
         }
 
         [TestMethod]

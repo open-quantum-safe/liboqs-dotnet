@@ -93,9 +93,8 @@ namespace dotnetOQSUnitTest
                 {
                     failedAlgs.Add(sig);
                 }
-
-                Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
             }
+            Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
         }
 
         [TestMethod]
