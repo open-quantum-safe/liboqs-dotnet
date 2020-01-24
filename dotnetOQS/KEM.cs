@@ -53,6 +53,30 @@ namespace OpenQuantumSafe
 
         [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_KEM_alg_is_enabled(string method_name);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_new")]
+        extern private static IntPtr Lib_OQS_KEM_new(string method_name);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_keypair")]
+        extern private static int Lib_OQS_KEM_keypair(IntPtr kem, byte[] public_key, byte[] secret_key);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_encaps")]
+        extern private static int Lib_OQS_KEM_encaps(IntPtr kem, byte[] ciphertext, byte[] shared_secret, byte[] public_key);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_decaps")]
+        extern private static int Lib_OQS_KEM_decaps(IntPtr kem, byte[] shared_secret, byte[] ciphertext, byte[] secret_key);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_free")]
+        extern private static void Lib_OQS_KEM_free(IntPtr kem);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_alg_identifier")]
+        extern private static IntPtr Lib_OQS_KEM_alg_identifier(int index);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_alg_count")]
+        extern private static int Lib_OQS_KEM_alg_count();
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_KEM_alg_is_enabled")]
+        extern private static int Lib_OQS_KEM_alg_is_enabled(string method_name);
         #endregion
 
         /// <summary>
@@ -74,15 +98,33 @@ namespace OpenQuantumSafe
             // initialize list of supported/enabled mechanisms
             List<string> enabled = new List<string>();
             List<string> supported = new List<string>();
-            int count = OQS_KEM_alg_count();
-            for (int i = 0; i < count; i++)
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                string alg = Marshal.PtrToStringAnsi(OQS_KEM_alg_identifier(i));
-                supported.Add(alg);
-                // determine if the alg is enabled
-                if (OQS_KEM_alg_is_enabled(alg) == 1)
+                int count = OQS_KEM_alg_count();
+                for (int i = 0; i < count; i++)
                 {
-                    enabled.Add(alg);
+                    string alg = Marshal.PtrToStringAnsi(OQS_KEM_alg_identifier(i));
+                    supported.Add(alg);
+                    // determine if the alg is enabled
+                    if (OQS_KEM_alg_is_enabled(alg) == 1)
+                    {
+                        enabled.Add(alg);
+                    }
+                }
+            }
+            else
+            {
+                int count = Lib_OQS_KEM_alg_count();
+                for (int i = 0; i < count; i++)
+                {
+                    string alg = Marshal.PtrToStringAnsi(Lib_OQS_KEM_alg_identifier(i));
+                    supported.Add(alg);
+                    // determine if the alg is enabled
+                    if (Lib_OQS_KEM_alg_is_enabled(alg) == 1)
+                    {
+                        enabled.Add(alg);
+                    }
                 }
             }
             EnabledMechanisms = enabled.ToImmutableList<string>();
@@ -111,7 +153,7 @@ namespace OpenQuantumSafe
             {
                 throw new MechanismNotEnabledException(kemAlg);
             }
-            oqs_ptr = OQS_KEM_new(kemAlg);
+            oqs_ptr = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_KEM_new(kemAlg) : Lib_OQS_KEM_new(kemAlg);
             if (oqs_ptr == IntPtr.Zero)
             {
                 throw new OQSException("Failed to initialize KEM mechanism");
@@ -225,7 +267,7 @@ namespace OpenQuantumSafe
 
             byte[] my_public_key = new byte[PublicKeyLength];
             byte[] my_secret_key = new byte[SecretKeyLength];
-            int returnValue = OQS_KEM_keypair(oqs_ptr, my_public_key, my_secret_key);
+            int returnValue = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_KEM_keypair(oqs_ptr, my_public_key, my_secret_key) : Lib_OQS_KEM_keypair(oqs_ptr, my_public_key, my_secret_key);
             if (returnValue != OpenQuantumSafe.Status.Success)
             {
                 throw new OQSException(returnValue);
@@ -249,7 +291,7 @@ namespace OpenQuantumSafe
 
             byte[] my_ciphertext = new byte[CiphertextLength];
             byte[] my_shared_secret = new byte[SharedSecretLength];
-            int returnValue = OQS_KEM_encaps(oqs_ptr, my_ciphertext, my_shared_secret, public_key);
+            int returnValue = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_KEM_encaps(oqs_ptr, my_ciphertext, my_shared_secret, public_key) : Lib_OQS_KEM_encaps(oqs_ptr, my_ciphertext, my_shared_secret, public_key);
             if (returnValue != OpenQuantumSafe.Status.Success)
             {
                 throw new OQSException(returnValue);
@@ -272,7 +314,7 @@ namespace OpenQuantumSafe
             }
 
             byte[] my_shared_secret = new byte[SharedSecretLength];
-            int returnValue = OQS_KEM_decaps(oqs_ptr, my_shared_secret, ciphertext, secret_key);
+            int returnValue = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_KEM_decaps(oqs_ptr, my_shared_secret, ciphertext, secret_key) : Lib_OQS_KEM_decaps(oqs_ptr, my_shared_secret, ciphertext, secret_key);
             if (returnValue != OpenQuantumSafe.Status.Success)
             {
                 throw new OQSException(returnValue);
@@ -282,7 +324,14 @@ namespace OpenQuantumSafe
 
         protected override void OQS_free(IntPtr oqs_ptr)
         {
-            OQS_KEM_free(oqs_ptr);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                OQS_KEM_free(oqs_ptr);
+            }
+            else
+            {
+                Lib_OQS_KEM_free(oqs_ptr);
+            }
         }
     }
 }

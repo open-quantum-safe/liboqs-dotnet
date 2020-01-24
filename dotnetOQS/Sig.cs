@@ -52,6 +52,30 @@ namespace OpenQuantumSafe
 
         [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_SIG_alg_is_enabled(string method_name);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_new")]
+        extern private static IntPtr Lib_OQS_SIG_new(string method_name);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_keypair")]
+        extern private static int Lib_OQS_SIG_keypair(IntPtr sig, byte[] public_key, byte[] secret_key);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_sign")]
+        extern private static int Lib_OQS_SIG_sign(IntPtr sig, byte[] signature, ref UIntPtr sig_len, byte[] message, int message_len, byte[] secret_key);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_verify")]
+        extern private static int Lib_OQS_SIG_verify(IntPtr sig, byte[] message, int message_len, byte[] signature, int signature_len, byte[] public_key);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_free")]
+        extern private static void Lib_OQS_SIG_free(IntPtr sig);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_alg_identifier")]
+        extern private static IntPtr Lib_OQS_SIG_alg_identifier(int index);
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_alg_count")]
+        extern private static int Lib_OQS_SIG_alg_count();
+
+        [DllImport("liboqs", CallingConvention = CallingConvention.Cdecl, EntryPoint = "OQS_SIG_alg_is_enabled")]
+        extern private static int Lib_OQS_SIG_alg_is_enabled(string method_name);
         #endregion
 
         /// <summary>
@@ -73,15 +97,33 @@ namespace OpenQuantumSafe
             // initialize list of supported/enabled mechanisms
             List<string> enabled = new List<string>();
             List<string> supported = new List<string>();
-            int count = OQS_SIG_alg_count();
-            for (int i = 0; i < count; i++)
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                string alg = Marshal.PtrToStringAnsi(OQS_SIG_alg_identifier(i));
-                supported.Add(alg);
-                // determine if the alg is enabled
-                if (OQS_SIG_alg_is_enabled(alg) == 1)
+                int count = OQS_SIG_alg_count();
+                for (int i = 0; i < count; i++)
                 {
-                    enabled.Add(alg);
+                    string alg = Marshal.PtrToStringAnsi(OQS_SIG_alg_identifier(i));
+                    supported.Add(alg);
+                    // determine if the alg is enabled
+                    if (OQS_SIG_alg_is_enabled(alg) == 1)
+                    {
+                        enabled.Add(alg);
+                    }
+                }
+            }
+            else
+            {
+                int count = Lib_OQS_SIG_alg_count();
+                for (int i = 0; i < count; i++)
+                {
+                    string alg = Marshal.PtrToStringAnsi(Lib_OQS_SIG_alg_identifier(i));
+                    supported.Add(alg);
+                    // determine if the alg is enabled
+                    if (Lib_OQS_SIG_alg_is_enabled(alg) == 1)
+                    {
+                        enabled.Add(alg);
+                    }
                 }
             }
             EnabledMechanisms = enabled.ToImmutableList<string>();
@@ -110,7 +152,7 @@ namespace OpenQuantumSafe
             {
                 throw new MechanismNotEnabledException(sigAlg);
             }
-            oqs_ptr = OQS_SIG_new(sigAlg);
+            oqs_ptr = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_SIG_new(sigAlg) : Lib_OQS_SIG_new(sigAlg);
             if (oqs_ptr == IntPtr.Zero)
             {
                 throw new OQSException("Failed to initialize signature mechanism");
@@ -211,7 +253,7 @@ namespace OpenQuantumSafe
 
             byte[] my_public_key = new byte[PublicKeyLength];
             byte[] my_secret_key = new byte[SecretKeyLength];
-            int returnValue = OQS_SIG_keypair(oqs_ptr, my_public_key, my_secret_key);
+            int returnValue = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_SIG_keypair(oqs_ptr, my_public_key, my_secret_key) : Lib_OQS_SIG_keypair(oqs_ptr, my_public_key, my_secret_key);
             if (returnValue != OpenQuantumSafe.Status.Success)
             {
                 throw new OQSException(returnValue);
@@ -234,7 +276,7 @@ namespace OpenQuantumSafe
             }
             byte[] my_signature = new byte[SignatureLength];
             UIntPtr sig_len_ptr = new UIntPtr();
-            int returnValue = OQS_SIG_sign(oqs_ptr, my_signature, ref sig_len_ptr, message, message.Length, secret_key);
+            int returnValue = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_SIG_sign(oqs_ptr, my_signature, ref sig_len_ptr, message, message.Length, secret_key) : Lib_OQS_SIG_sign(oqs_ptr, my_signature, ref sig_len_ptr, message, message.Length, secret_key);
             if (returnValue != OpenQuantumSafe.Status.Success)
             {
                 throw new OQSException(returnValue);
@@ -256,7 +298,7 @@ namespace OpenQuantumSafe
             {
                 throw new ObjectDisposedException("Sig");
             }
-            int returnValue = OQS_SIG_verify(oqs_ptr, message, message.Length, signature, signature.Length, public_key);
+            int returnValue = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? OQS_SIG_verify(oqs_ptr, message, message.Length, signature, signature.Length, public_key) : Lib_OQS_SIG_verify(oqs_ptr, message, message.Length, signature, signature.Length, public_key);
             if (returnValue == OpenQuantumSafe.Status.Success)
             {
                 return true;
@@ -272,7 +314,14 @@ namespace OpenQuantumSafe
 
         protected override void OQS_free(IntPtr oqs_ptr)
         {
-            OQS_SIG_free(oqs_ptr);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                OQS_SIG_free(oqs_ptr);
+            }
+            else
+            {
+                Lib_OQS_SIG_free(oqs_ptr);
+            }
         }
     }
 }
