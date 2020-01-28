@@ -28,7 +28,7 @@ liboqs-dotnet
 
 This solution implements a .NET wrapper in C# for the C OQS library. It contains the following projects:
 
-- **dotnetOQS**: A C# class library targeting .NET Core 1.1, wrapping the master branch of the OQS library.
+- **dotnetOQS**: A C# class library targeting .NET Standard 1.2 and 2.0, wrapping the master branch of the OQS library.
 - **dotnetOQSUnitTest**: Unit tests for the dotnetOQS project.
 - **dotnetOQSSample**: A sample program illustrating the usage of the dotnetOQS library.
 
@@ -52,7 +52,9 @@ Builds are tested using the Appveyor continuous integration system on Windows Se
 
 To build the .NET OQS wrapper you need a .NET development environment; see the Getting Started section on the [.NET Core](https://dotnet.github.io/) GitHub page for more information.
 
-The wrapper targets version 1.1 of the .NET Core, which can be obtained [here](https://dotnet.microsoft.com/download/dotnet-core/1.1).
+The wrapper targets version 1.2 and 2.0 of the .NET Standard, which can be obtained [here](https://dotnet.microsoft.com/download/dotnet-core/2.1).
+
+Installing .Net Core 2.1 SDK and above is recommended for the installation steps below.
 
 ### Step 1: Build liboqs
 
