@@ -46,17 +46,36 @@ liboqs-dotnet is provided "as is", without warranty of any kind.  See [LICENSE.t
 Building
 --------
 
-Builds are tested using the Appveyor continuous integration system on Windows Server 2016 (Visual Studio 2017).  Builds have been tested manually on Windows 10 with Visual Studio 2017 (Community and Enterprise editions).
+Builds are tested using the Appveyor continuous integration system on Windows Server 2016 (Visual Studio 2017).  Builds have been tested manually on Windows 10 with Visual Studio 2017 (Community and Enterprise editions) and macOS Mojave.
 
 ### Step 0: Prerequisites
 
 To build the .NET OQS wrapper you need a .NET development environment; see the Getting Started section on the [.NET Core](https://dotnet.github.io/) GitHub page for more information.
 
-The wrapper targets version 1.2 and 2.0 of the .NET Standard, which can be obtained [here](https://dotnet.microsoft.com/download/dotnet-core/2.1).
+The wrapper targets version 1.2 and 2.0 of the .NET standard framework which supports a wide range of framework [here](https://docs.microsoft.com/en-us/dotnet/standard/net-standard#net-implementation-support).
 
-Installing .Net Core 2.1 SDK and above is recommended for the installation steps below.
+Installing .Net Core 2.1 SDK and above is recommended for the installation steps below which can be obtained [here](https://dotnet.microsoft.com/download/dotnet-core/2.1).
 
 ### Step 1: Build liboqs
+
+#### Linux/macOS
+
+1. Follow the instructions in [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs#linuxmacos) to build a dynamic/shared library.
+2. Goto liboqs-dotnet and create "x64" and "arm" folder:
+
+        cd ../liboqs-dotnet
+        mkdir x64    (Required)
+        mkdir arm    (Optional: For arm support only)
+        
+3. Copy the output into the base dotnetOQS solution directory:
+
+        cd ../liboqs
+        cp .libs/liboqs.so ../liboqs-dotnet/x64/liboqs.dylib       (For Linux)
+        cp .libs/liboqs.dylib ../liboqs-dotnet/x64/liboqs.dylib    (For macOS)
+
+The folder to copy into is based on the architecture you are building for.
+
+#### Windows
 
 The master branch of the OQS library must be obtained and compiled into a DLL for the target platform before building the liboqs-dotnet solution.
 
@@ -67,23 +86,77 @@ The master branch of the OQS library must be obtained and compiled into a DLL fo
 
 3. Copy the liboqs DLL into the base dotnetOQS solution directory:
 
-		copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\
+		copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\x64
+
+The folder to copy into is based on the architecture you are building for.
 
 See the [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs#building-and-running-on-windows) for more information on building the library on Windows.
 
 ### Step 2: Build dotnetOQS
 
-The dotnetOQS solution can be built using Visual Studio or on the command line:
+#### Building .Net OQS wrapper
 
-	msbuild dotnetOQS.sln /p:Configuration=Release
+The dotnetOQS wrapper can be built using Visual Studio or on the command line:
+
+    :: This is for Debugging purpose only.
+	dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f netstandard1.2 -c Debug -o bin/Debug/dotnetOQS-netstandard1.2
+    dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f netstandard2.0 -c Debug -o bin/Debug/dotnetOQS-netstandard2.0
+    
+    :: Prefer release build for optimization :)
+    dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f netstandard1.2 -c Release -o bin/Release/dotnetOQS-netstandard1.2
+    dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f netstandard2.0 -c Release -o bin/Release/dotnetOQS-netstandard2.0
+
+The command lines above build the wrapper that can be used for reference in any .NET projects.
+
+For your convenience, you could execute the scripts in the root liboqs-dotnet folder which does the same thing above:
+    
+See [win_wrapper_build.bat](https://github.com/open-quantum-safe/liboqs-dotnet/blob/master/scripts/win_wrapper_build.bat) or [linux_macos_wrapper_build.sh](https://github.com/open-quantum-safe/liboqs-dotnet/blob/master/scripts/linux_macos_wrapper_build.sh)
+
+#### Building .Net OQS sample application
+    
+The dotnetOQS sample application can be build using Visual Studio or on the command line:
+
+    :: For building via Windows
+    dotnet publish dotnetOQSSample\dotnetOQSSample.csproj /p:Platform=x64 /p:TargetFramework=netcoreapp2.1 -c Release -f netcoreapp2.1 -o bin\Release\dotnetOQSSample-netcoreapp2.1-win-x64 -r win-x64 --self-contained
+    copy x64\oqs.dll bin\Release\dotnetOQSSample-netcoreapp2.1-win-x64
+    
+    :: For building via macOS
+    dotnet publish dotnetOQSSample/dotnetOQSSample.csproj /p:Platform=x64 /p:TargetFramework=netcoreapp2.1 -c Release -f netcoreapp2.1 -o bin/Release/dotnetOQSSample-netcoreapp2.1-osx-x64 -r osx-x64 --self-contained
+    cp x64/liboqs.dylib bin/Release/dotnetOQSSample-netcoreapp2.1-osx-x64
+
+You can build for other architecture and platform by using the [dotnet publish cli command](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish?tabs=netcore21).
 
 ### Running the sample and test programs
 
 The sample program can be ran using Visual Studio or on the command line:
 
-	dotnet dotnetOQSSample\bin\Release\netcoreapp1.1\dotnetOQSSample.dll
+    :: For windows (netcoreapp1.1)
+    dotnet bin/Release/dotnetOQSSample-netcoreapp1.1-win-x64.dll
+    
+    :: For windows (netcoreapp2.1 and above)
+    ./bin/Release/dotnetOQSSample-netcoreapp2.1-win-x64/dotnetOQSSample.exe
+    
+    :: For linux (netcoreapp1.1)
+    dotnet bin/Release/dotnetOQSSample-netcoreapp1.1-linux-x64.dll
+    
+    :: For linux (netcoreapp2.1 and above)
+    ./bin/Release/dotnetOQSSample-netcoreapp2.1-linux-x64/dotnetOQSSample
+    
+    :: For macOS (netcoreapp1.1)
+    dotnet bin/Release/dotnetOQSSample-netcoreapp1.1-osx-x64.dll
+    
+    :: For macOS (netcoreapp2.1 and above)
+    ./bin/Release/dotnetOQSSample-netcoreapp2.1-osx-x64/dotnetOQSSample
+    
+    :: For running tests.
+    :: You will need to manually copy the oqs.dll (For windows) liboqs.so (For linux) liboqs.dylib (For macOS) into "dotnetOQSUnitTest/bin/Debug/netcoreapp1.1".
+	dotnet test
 
 The unit tests can be running using Visual Studio's "Test" menu.
+
+### Extra
+
+There are some sample scripts that you can execute in the scripts folder. You are free to play around with it if you want a custom build.
 
 Troubleshooting
 ---------------
