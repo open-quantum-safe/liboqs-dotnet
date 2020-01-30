@@ -63,19 +63,19 @@ Installing .Net Core 2.1 SDK and above is recommended for the installation steps
 1. Follow the instructions in [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs#linuxmacos) to build a dynamic/shared library.
 2. Goto liboqs-dotnet and create "x64" and "arm" folder:
 
-    cd ../liboqs-dotnet
-    mkdir x64
-    mkdir arm
+        cd ../liboqs-dotnet
+        mkdir x64
+        mkdir arm
         
 3. Copy the output into the base dotnetOQS solution directory:
 
-    cd ../liboqs
-    
-    :: For linux
-    cp .libs/liboqs.so ../liboqs-dotnet/x64/liboqs.so
-    
-    :: For macOS
-    cp .libs/liboqs.dylib ../liboqs-dotnet/x64/liboqs.dylib
+        cd ../liboqs
+        
+        :: For linux
+        cp .libs/liboqs.so ../liboqs-dotnet/x64/liboqs.so
+        
+        :: For macOS
+        cp .libs/liboqs.dylib ../liboqs-dotnet/x64/liboqs.dylib
 
 The folder to copy into is based on the architecture you are building for.
 
@@ -86,11 +86,11 @@ The master branch of the OQS library must be obtained and compiled into a DLL fo
 1. Download and unzip the [liboqs master branch archive](https://github.com/open-quantum-safe/liboqs/archive/master.zip). By default the contents will be into a `liboqs-master` folder.
 2. Build the DLL target of the OQS solution, either using Visual Studio or on the command line:
 
-    msbuild liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
+        msbuild liboqs-master\VisualStudio\liboqs.sln /p:Configuration=ReleaseDLL;Platform=x64
 
 3. Copy the liboqs DLL into the base dotnetOQS solution directory:
 
-    copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\x64
+        copy liboqs-master\VisualStudio\x64\ReleaseDLL\oqs.dll liboqs-dotnet\x64
 
 The folder to copy into is based on the architecture you are building for.
 
