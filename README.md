@@ -114,7 +114,7 @@ The dotnetOQS sample application can be build using Visual Studio or on the comm
 
     :: Generic dotnet publish command:
     :: dotnet publish <Project/Solution> /p:Platform=<x64/x86/AnyCPU> /p:TargetFramework=<netcoreapp1.1/2.1/3.1> -c <Release/Debug> -f <netcoreapp1.1/2.1/3.1> -o <Output directory> -r <win/linux/osx-x64/x86/arm> --self-contained
-    ::Refer to the remark below for more details.
+    :: Refer to the remark below for more details.
 
     :: For building via Windows for windows
     dotnet publish dotnetOQSSample\dotnetOQSSample.csproj /p:Platform=x64 /p:TargetFramework=netcoreapp2.1 -c Release -f netcoreapp2.1 -o bin\Release\dotnetOQSSample-netcoreapp2.1-win-x64 -r win-x64 --self-contained
