@@ -119,6 +119,10 @@ The dotnetOQS sample application can be build using Visual Studio or on the comm
     :: For building via Windows
     dotnet publish dotnetOQSSample\dotnetOQSSample.csproj /p:Platform=x64 /p:TargetFramework=netcoreapp2.1 -c Release -f netcoreapp2.1 -o bin\Release\dotnetOQSSample-netcoreapp2.1-win-x64 -r win-x64 --self-contained
     copy x64\oqs.dll bin\Release\dotnetOQSSample-netcoreapp2.1-win-x64
+	
+	:: For building via linux
+    dotnet publish dotnetOQSSample/dotnetOQSSample.csproj /p:Platform=x64 /p:TargetFramework=netcoreapp2.1 -c Release -f netcoreapp2.1 -o bin/Release/dotnetOQSSample-netcoreapp2.1-linux-x64 -r linux-x64 --self-contained
+    copy x64/liboqs.so bin/Release/dotnetOQSSample-netcoreapp2.1-linux-x64
     
     :: For building via macOS
     dotnet publish dotnetOQSSample/dotnetOQSSample.csproj /p:Platform=x64 /p:TargetFramework=netcoreapp2.1 -c Release -f netcoreapp2.1 -o bin/Release/dotnetOQSSample-netcoreapp2.1-osx-x64 -r osx-x64 --self-contained
