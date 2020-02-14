@@ -80,7 +80,7 @@ Installing .Net Core 2.1 SDK and above is recommended for the installation steps
 
 The folder to copy into is based on the architecture you are building for. This is to seperate different architecture libraries for the steps below.
 
-* The creation of the folder and copying into it is not mandatory. You can always copy into the root folder of "liboqs-dotnet" if you know exactly what you are doing.
+*The creation of "x64" folder and copying into it is not mandatory. You can always copy into the root folder of "liboqs-dotnet" if you know exactly what you are doing.
 
 #### Windows
 
@@ -97,7 +97,7 @@ The master branch of the OQS library must be obtained and compiled into a DLL fo
 
 The folder to copy into is based on the architecture you are building for. This is to seperate different architecture libraries for the steps below.
 
-* The creation of "x64" folder and copying into it is not mandatory. You can always copy into the root folder of "liboqs-dotnet" if you know exactly what you are doing.
+*The creation of "x64" folder and copying into it is not mandatory. You can always copy into the root folder of "liboqs-dotnet" if you know exactly what you are doing.
 
 See the [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs#building-and-running-on-windows) for more information on building the library on Windows.
 
@@ -117,7 +117,7 @@ The dotnetOQS wrapper can be built using Visual Studio or on the command line:
 
 The command lines above build the wrapper that can be used for reference in any .NET projects.
 
-* You are not required to do this step if you are building the sample application below. This is just for building the wrapper for you to reference in your project.
+*You are not required to do this step if you are building the sample application below. This is just for building the wrapper for you to reference in your project.
 
 #### Building .Net OQS sample application
     
