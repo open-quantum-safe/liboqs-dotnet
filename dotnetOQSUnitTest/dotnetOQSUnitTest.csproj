@@ -2,7 +2,7 @@
 
   <PropertyGroup>    
     <TargetFramework>netcoreapp1.1</TargetFramework>    
-    <PreBuildEvent>copy $(SolutionDir)oqs.dll $(TargetDir)</PreBuildEvent>
+    <PreBuildEvent>copy $(SolutionDir)x64\oqs.dll $(TargetDir)</PreBuildEvent>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='netcoreapp3.1'">
