@@ -5,37 +5,36 @@ image: Visual Studio 2019
 platform: x64
 
 environment:
-    LIBOQS_INSTALL_PATH: C:\liboqs
-    LIBOQS_BUILD_DIR: C:\liboqs\build
-    LIBOQS_INCLUDE_DIR: C:\liboqs\build\include
-    LIBOQS_LIB_DIR: C:\liboqs\build\lib
-    LIBOQS_DLL_DIR: C:\liboqs\build\bin
+  LIBOQS_INSTALL_PATH: C:\liboqs
+  LIBOQS_BUILD_DIR: C:\liboqs\build
+  LIBOQS_INCLUDE_DIR: C:\liboqs\build\include
+  LIBOQS_LIB_DIR: C:\liboqs\build\lib
+  LIBOQS_DLL_DIR: C:\liboqs\build\bin
 
 before_build:
-    - cmd: |-
-        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-        set PATH="C:\\Python37";"C:\\Python37\Scripts";%PATH%    
-        git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
-        mkdir %LIBOQS_BUILD_DIR%
-        cd %LIBOQS_BUILD_DIR%
-        cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
-        ninja 1> nul
+  - cmd: |-
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+    set PATH="C:\\Python37";"C:\\Python37\Scripts";%PATH%    
+    git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
+    mkdir %LIBOQS_BUILD_DIR%
+    cd %LIBOQS_BUILD_DIR%
+    cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
+    ninja 1> nul
 
 build:
-    project: dotnetOQS.sln
-    verbosity: minimal
-    parallel: true
+  project: dotnetOQS.sln
+  verbosity: minimal
+  parallel: true
 
 configuration:
-    - Release
+  - Release
 
 test_script:
-    - cmd: >-
-        set PATH=%LIBOQS_DLL_DIR%;%PATH%
-
-	dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
+  - cmd: >-
+    set PATH=%LIBOQS_DLL_DIR%;%PATH%
+    dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
 
 test:
-    assemblies:
-        only:
-    	- %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSUnitTest.dll
+  assemblies:
+    only:
+      - %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSUnitTest.dll
