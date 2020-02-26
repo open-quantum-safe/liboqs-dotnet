@@ -20,6 +20,8 @@ before_build:
       cd %LIBOQS_BUILD_DIR%
       cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
       ninja 1> nul
+      mkdir %APPVEYOR_BUILD_FOLDER%\x64
+      copy %LIBOQS_BUILD_DIR%\oqs.dll %APPVEYOR_BUILD_FOLDER%\x64
 
 build:
   project: dotnetOQS.sln
@@ -28,11 +30,6 @@ build:
 
 configuration:
   - Release
-
-after_build:
-  - cmd: |-
-      mkdir %APPVEYOR_BUILD_FOLDER%\x64
-      copy %LIBOQS_BUILD_DIR%\oqs.dll %APPVEYOR_BUILD_FOLDER%\x64
 
 test_script:
   - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
