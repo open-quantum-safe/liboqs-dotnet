@@ -13,13 +13,13 @@ environment:
 
 before_build:
   - cmd: |-
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-    set PATH="C:\\Python37";"C:\\Python37\Scripts";%LIBOQS_BUILD_DIR%;%PATH%
-    git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
-    mkdir %LIBOQS_BUILD_DIR%
-    cd %LIBOQS_BUILD_DIR%
-    cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
-    ninja 1> nul
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+      set PATH="C:\\Python37";"C:\\Python37\Scripts";%LIBOQS_BUILD_DIR%;%PATH%
+      git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
+      mkdir %LIBOQS_BUILD_DIR%
+      cd %LIBOQS_BUILD_DIR%
+      cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
+      ninja 1> nul
 
 build:
   project: dotnetOQS.sln
@@ -35,4 +35,4 @@ test_script:
 test:
   assemblies:
     only:
-      - %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSUnitTest.dll
+      - dotnetOQSUnitTest.dll
