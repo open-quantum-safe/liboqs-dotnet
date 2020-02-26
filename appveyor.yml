@@ -14,7 +14,7 @@ environment:
 before_build:
   - cmd: |-
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-    set PATH="C:\\Python37";"C:\\Python37\Scripts";%PATH%    
+    set PATH="C:\\Python37";"C:\\Python37\Scripts";%LIBOQS_BUILD_DIR%;%PATH%
     git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
     mkdir %LIBOQS_BUILD_DIR%
     cd %LIBOQS_BUILD_DIR%
@@ -30,9 +30,7 @@ configuration:
   - Release
 
 test_script:
-  - cmd: >-
-    set PATH=%LIBOQS_DLL_DIR%;%PATH%
-    dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
+  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
 
 test:
   assemblies:
