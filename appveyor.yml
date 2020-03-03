@@ -35,7 +35,7 @@ configuration:
 test_script:
   - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
 
-test:
-  assemblies:
-    only:
-      - dotnetOQSUnitTest.dll
+#test:
+#  assemblies:
+#    only:
+#      - dotnetOQSUnitTest.dll
