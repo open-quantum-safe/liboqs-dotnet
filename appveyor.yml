@@ -38,4 +38,4 @@ test_script:
 test:
   assemblies:
     only:
-      - %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSUnitTest.dll
+      - dotnetOQSUnitTest.dll
