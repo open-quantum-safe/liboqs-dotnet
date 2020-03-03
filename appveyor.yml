@@ -32,8 +32,8 @@ build:
 configuration:
   - Release
 
-test_script:
-  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
+#test_script:
+#  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%PLATFORM%\netcoreapp1.1\dotnetOQSSample.dll
 
 #test:
 #  assemblies:
