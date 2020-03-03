@@ -30,28 +30,28 @@ namespace OpenQuantumSafe
         }
 
         #region OQS native DLL functions
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static IntPtr OQS_KEM_new(string method_name);
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_KEM_keypair(IntPtr kem, byte[] public_key, byte[] secret_key);
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_KEM_encaps(IntPtr kem, byte[] ciphertext, byte[] shared_secret, byte[] public_key);
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_KEM_decaps(IntPtr kem, byte[] shared_secret, byte[] ciphertext, byte[] secret_key);
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static void OQS_KEM_free(IntPtr kem);
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static IntPtr OQS_KEM_alg_identifier(int index);
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_KEM_alg_count();
 
-        [DllImport("oqs.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("oqs", CallingConvention = CallingConvention.Cdecl)]
         extern private static int OQS_KEM_alg_is_enabled(string method_name);
         #endregion
 
@@ -74,6 +74,7 @@ namespace OpenQuantumSafe
             // initialize list of supported/enabled mechanisms
             List<string> enabled = new List<string>();
             List<string> supported = new List<string>();
+
             int count = OQS_KEM_alg_count();
             for (int i = 0; i < count; i++)
             {
