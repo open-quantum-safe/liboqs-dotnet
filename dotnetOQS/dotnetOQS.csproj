@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.2;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.2;netstandard2.1</TargetFrameworks>
     <RootNamespace>OQS</RootNamespace>
   </PropertyGroup>
   
@@ -13,9 +13,5 @@
     <Optimize>true</Optimize>
     <DebugType>none</DebugType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Collections.Immutable" Version="1.7.0" />
-  </ItemGroup>
 
 </Project>

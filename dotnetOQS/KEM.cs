@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Runtime.InteropServices;
 
 namespace OpenQuantumSafe
@@ -59,12 +58,12 @@ namespace OpenQuantumSafe
         /// List of supported mechanisms. Some mechanisms might have been disabled at runtime,
         /// see <see cref="EnableddMechanisms"/> for the list of enabled mechanisms.
         /// </summary>
-        public static ImmutableList<string> SupportedMechanisms { get; private set; }
+        public static List<string> SupportedMechanisms { get; private set; }
 
         /// <summary>
         /// List of enabled mechanisms.
         /// </summary>
-        public static ImmutableList<string> EnabledMechanisms { get; protected set; }
+        public static List<string> EnabledMechanisms { get; protected set; }
 
         /// <summary>
         /// Static constructor.
@@ -72,22 +71,20 @@ namespace OpenQuantumSafe
         static KEM()
         {
             // initialize list of supported/enabled mechanisms
-            List<string> enabled = new List<string>();
-            List<string> supported = new List<string>();
+            EnabledMechanisms = new List<string>();
+            SupportedMechanisms = new List<string>();
 
             int count = OQS_KEM_alg_count();
             for (int i = 0; i < count; i++)
             {
                 string alg = Marshal.PtrToStringAnsi(OQS_KEM_alg_identifier(i));
-                supported.Add(alg);
+                SupportedMechanisms.Add(alg);
                 // determine if the alg is enabled
                 if (OQS_KEM_alg_is_enabled(alg) == 1)
                 {
-                    enabled.Add(alg);
+                    EnabledMechanisms.Add(alg);
                 }
             }
-            EnabledMechanisms = enabled.ToImmutableList<string>();
-            SupportedMechanisms = supported.ToImmutableList<string>();
         }
 
         /// <summary>
