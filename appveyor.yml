@@ -14,14 +14,14 @@ environment:
 before_build:
   - cmd: |-
       call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-      set PATH=%LIBOQS_BUILD_DIR%;%PATH%
+      set PATH=%APPVEYOR_BUILD_FOLDER%\%PLATFORM%;%PATH%
       git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
       mkdir %LIBOQS_BUILD_DIR%
       cd %LIBOQS_BUILD_DIR%
       cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
       ninja 1> nul
-      mkdir %APPVEYOR_BUILD_FOLDER%\x64
-      copy %LIBOQS_BUILD_DIR%\bin\oqs.dll %APPVEYOR_BUILD_FOLDER%\x64
+      mkdir %APPVEYOR_BUILD_FOLDER%\%PLATFORM%
+      copy %LIBOQS_BUILD_DIR%\bin\oqs.dll %APPVEYOR_BUILD_FOLDER%\%PLATFORM%
       nuget restore %APPVEYOR_BUILD_FOLDER%\dotnetOQS.sln
 
 build:
