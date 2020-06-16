@@ -126,8 +126,6 @@ namespace dotnetOQSSample
         {
             example_kem();
             example_sig();
-            Console.WriteLine("Press ENTER to exit");
-            Console.ReadLine();
         }
     }
 }
