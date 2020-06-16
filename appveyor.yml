@@ -22,7 +22,7 @@ before_build:
       ninja 1> nul
       mkdir %APPVEYOR_BUILD_FOLDER%\x64
       copy %LIBOQS_BUILD_DIR%\bin\oqs.dll %APPVEYOR_BUILD_FOLDER%\x64
-#      nuget restore %APPVEYOR_BUILD_FOLDER%\dotnetOQS.sln
+      nuget restore %APPVEYOR_BUILD_FOLDER%\dotnetOQS.sln
 
 build:
   project: dotnetOQS.sln
