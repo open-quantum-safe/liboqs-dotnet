@@ -1,0 +1,38 @@
+version: 1.0.{build}
+
+image: Visual Studio 2019
+
+platform: x64
+
+environment:
+  LIBOQS_INSTALL_PATH: C:\liboqs
+  LIBOQS_BUILD_DIR: C:\liboqs\build
+  LIBOQS_INCLUDE_DIR: C:\liboqs\build\include
+  LIBOQS_LIB_DIR: C:\liboqs\build\lib
+  LIBOQS_DLL_DIR: C:\liboqs\build\bin
+
+before_build:
+  - cmd: |-
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+      set PATH=%APPVEYOR_BUILD_FOLDER%\%PLATFORM%;%PATH%
+      git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
+      mkdir %LIBOQS_BUILD_DIR%
+      cd %LIBOQS_BUILD_DIR%
+      cmake .. -G"Ninja" -DBUILD_SHARED_LIBS=ON
+      ninja 1> nul
+      mkdir %APPVEYOR_BUILD_FOLDER%\%PLATFORM%
+      copy %LIBOQS_BUILD_DIR%\bin\oqs.dll %APPVEYOR_BUILD_FOLDER%\%PLATFORM%
+      nuget restore %APPVEYOR_BUILD_FOLDER%\dotnetOQS.sln
+
+build:
+  project: dotnetOQS.sln
+  verbosity: minimal
+  parallel: true
+
+configuration:
+  - Release
+
+test_script:
+  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%CONFIGURATION%\netcoreapp1.1\dotnetOQSSample.dll
+  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%CONFIGURATION%\netcoreapp1.1\dotnetOQSUnitTest.dll
+
