@@ -63,15 +63,15 @@ To build `liboqs-dotnet` on archnitecture `<arch>` (where `<arch>` is one of the
 
 ### Build the OQS dependency
 
-1. Follow the instructions in [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs) to obtain (in a `liboqs` folder) and build an OQS shared library (on Linux/Mac) or DLL (on Windows) for `<arch>`.
+1. Follow the instructions in [liboqs REAMDE.md](https://github.com/open-quantum-safe/liboqs#quickstart) to obtain (in a `liboqs` folder) and build an OQS shared library (on Linux/Mac) or DLL (on Windows) for `<arch>`.
 
 2. Copy the OQS library to the target liboqs-dotnet directory:
 
        :: For linux
-       mkdir liboqs-dotnet/<arch> && cp liboqs/.libs/liboqs.so liboqs-dotnet/<arch>/
+       mkdir liboqs-dotnet/<arch> && cp liboqs/build/lib/liboqs.so liboqs-dotnet/<arch>/
        
        :: For macOS
-       mkdir liboqs-dotnet/<arch> && cp liboqs/.libs/liboqs.dylib liboqs-dotnet/<arch>/
+       mkdir liboqs-dotnet/<arch> && cp liboqs/build/lib/liboqs.dylib liboqs-dotnet/<arch>/
 
        :: For Windows
        mkdir liboqs-dotnet\<arch> && copy liboqs\VisualStudio\<arch>\ReleaseDLL\oqs.dll liboqs-dotnet\<arch>\
