@@ -1,4 +1,4 @@
-liboqs-dotnet version 0.2.0
+liboqs-dotnet version 0.3.0
 ===========================
 
 About
@@ -13,11 +13,23 @@ The **Open Quantum Safe (OQS) project** has the goal of developing and prototypi
 Release notes
 =============
 
-This release of liboqs-dotnet was released on October 8, 2019.  Its release page on GitHub is https://github.com/open-quantum-safe/liboqs-dotnet/releases/tag/0.2.0.
+This release of liboqs-dotnet was released on July 9th, 2020.  Its release page on GitHub is https://github.com/open-quantum-safe/liboqs-dotnet/releases/tag/0.3.0.
 
-What's New
+Changes
 ----------
 
-This is the second release of liboqs-dotnet.
+Version 0.3.0
+    - Added support to linux and macOS (with circleci tests)
+    - Added support for liboqs 0.3.0
 
-This release updates for compatibility with liboqs 0.2.0, which contains new/updated algorithms based on NIST Round 2 submissions.
+Version 0.2.0
+    - This release updates for compatibility with liboqs 0.2.0, which contains
+      new/updated algorithms based on NIST Round 2 submissions.
+
+Version 0.1.0
+    - Initial release
+
+
+
+
+
