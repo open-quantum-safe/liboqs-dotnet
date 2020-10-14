@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.2;netstandard2.1</TargetFrameworks>
     <RootNamespace>OQS</RootNamespace>
+    <RepositoryUrl>https://github.com/lacchain/liboqs-dotnet.git</RepositoryUrl> 
+    <RepositoryType>git</RepositoryType>
+    <Version>0.4.0-alpha</Version>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

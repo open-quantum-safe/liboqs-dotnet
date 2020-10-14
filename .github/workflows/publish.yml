@@ -1,0 +1,46 @@
+on:
+  push:
+    branches:
+      - '**' 
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    name: Update NuGet package
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          path: liboqs-dotnet
+
+      - name: Checkout LibOQS 0.4.0
+        uses: actions/checkout@v2
+        with:
+          repository: open-quantum-safe/liboqs
+          ref: 0.4.0
+          path: liboqs
+
+      - name: Build LibOQS
+        run: |
+          mkdir liboqs/build
+          cd liboqs/build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DOQS_ENABLE_SIG_SPHINCS=OFF -DOQS_ENABLE_SIG_RAINBOW=OFF -DBUILD_SHARED_LIBS=ON
+          make
+
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://nuget.pkg.github.com/lacchain/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}        
+
+      - name: Build solution and generate NuGet package
+        run: |  
+          cd liboqs-dotnet
+          dotnet pack -c Release -o out  
+
+      - name: Push generated package to GitHub registry
+        run: dotnet nuget push ./liboqs-dotnet/out/*.nupkg --skip-duplicate --no-symbols true
