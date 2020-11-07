@@ -28,7 +28,7 @@ liboqs-dotnet
 
 This solution implements a .NET wrapper in C# for the C OQS library. It contains the following projects:
 
-- **dotnetOQS**: A C# class library, wrapping the master branch of the OQS library.
+- **dotnetOQS**: A C# class library, wrapping the `main` branch of the OQS library.
 - **dotnetOQSUnitTest**: Unit tests for the dotnetOQS project.
 - **dotnetOQSSample**: A sample program illustrating the usage of the dotnetOQS library.
 - **scripts**: Various scripts to build the wrapper on different platforms.

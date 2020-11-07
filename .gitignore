@@ -9,5 +9,5 @@ bin/
 obj/
 
 # backup filesd
-
+*.swp
 *~
