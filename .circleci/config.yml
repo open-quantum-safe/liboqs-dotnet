@@ -11,10 +11,10 @@ localCheckout: &localCheckout
     cp -a /tmp/_circleci_local_build_repo/.git ${PROJECT_PATH}
 
 jobs:
-  ubuntu_bionic:
-    description: A template for running liboqs-dotnet tests on x64 Ubuntu Bionic Docker VMs
+  ubuntu_build:
+    description: A template for running liboqs-dotnet tests on x64 Ubuntu Focal Docker VMs
     docker:
-      - image: openquantumsafe/ci-ubuntu-bionic-x86_64:latest
+      - image: openquantumsafe/ci-ubuntu-focal-x86_64:latest
         auth:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD
@@ -66,7 +66,7 @@ workflows:
   version: 2.1
   build:
     jobs:
-      - ubuntu_bionic:
+      - ubuntu_build:
           name: ubuntu
       - macOS:
           name: mac
