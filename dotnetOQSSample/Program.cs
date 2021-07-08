@@ -19,10 +19,10 @@ namespace dotnetOQSSample
             }
 
             // Instantiate the client and server
-            using (KEM client = new KEM("DEFAULT"),
-                       server = new KEM("DEFAULT"))
+            using (KEM client = new KEM("Kyber512"),
+                       server = new KEM("Kyber512"))
             {
-                Console.WriteLine("Perform key exchange with DEFAULT mechanism");
+                Console.WriteLine("Perform key exchange with Kyber512 mechanism");
 
                 // Print out some info about the mechanism
                 Console.WriteLine("Mechanism details:");
@@ -78,10 +78,10 @@ namespace dotnetOQSSample
             }
 
             // Instantiate the signer and verifier
-            using (Sig signer = new Sig("DEFAULT"),
-                       verifier = new Sig("DEFAULT"))
+            using (Sig signer = new Sig("Dilithium2"),
+                       verifier = new Sig("Dilithium2"))
             {
-                Console.WriteLine("Sign with DEFAULT mechanism");
+                Console.WriteLine("Sign with Dilithium2 mechanism");
 
                 // Print out some info about the mechanism
                 Console.WriteLine("Mechanism details:");

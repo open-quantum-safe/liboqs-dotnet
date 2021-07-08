@@ -30,10 +30,7 @@ namespace dotnetOQSUnitTest
 
             // successful case
             KEM kem = new KEM(kemAlg);
-            if (kemAlg != "DEFAULT")
-            {
-                Assert.AreEqual(kem.AlgorithmName, kemAlg);
-            }
+            Assert.AreEqual(kem.AlgorithmName, kemAlg);
             Assert.IsTrue(kem.IsUsable, "IsUsable after constructor");
 
             kem.keypair(out public_key, out secret_key);
@@ -85,12 +82,6 @@ namespace dotnetOQSUnitTest
             // clean-up
             kem.Dispose();
             Assert.IsFalse(kem.IsUsable, "IsUsable after cleanup");
-        }
-
-        [TestMethod]
-        public void TestKEMOQSDefault()
-        {
-            TestKEM("DEFAULT");
         }
 
         [TestMethod]

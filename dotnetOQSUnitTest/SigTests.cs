@@ -31,10 +31,7 @@ namespace dotnetOQSUnitTest
 
             // successful case
             Sig sig = new Sig(sigAlg);
-            if (sigAlg != "DEFAULT")
-            {
-                Assert.AreEqual(sig.AlgorithmName, sigAlg);
-            }
+            Assert.AreEqual(sig.AlgorithmName, sigAlg);
             Assert.IsTrue(sig.IsUsable, "IsUsable after constructor");
 
             sig.keypair(out public_key, out secret_key);
@@ -71,12 +68,6 @@ namespace dotnetOQSUnitTest
             // clean-up
             sig.Dispose();
             Assert.IsFalse(sig.IsUsable, "IsUsable after cleanup");
-        }
-
-        [TestMethod]
-        public void TestSigOQSDefault()
-        {
-            TestSig("DEFAULT");
         }
 
         [TestMethod]
