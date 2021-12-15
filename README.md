@@ -1,7 +1,7 @@
 liboqs-dotnet
 =============
 
-[![Build status - Windows](https://ci.appveyor.com/api/projects/status/o3aqcf95kutixle5?svg=true)](https://ci.appveyor.com/project/dstebila/liboqs-dotnet)
+[![Build status - Windows](https://ci.appveyor.com/api/projects/status/o3aqcf95kutixle5?svg=true)](https://ci.appveyor.com/project/dstebila/liboqs-dotnet), [CircleCI](https://circleci.com/gh/open-quantum-safe/liboqs-dotnet/tree/master): ![Build status image](https://circleci.com/gh/open-quantum-safe/liboqs-dotnet/tree/master.svg?style=svg)
 
 ---
 
