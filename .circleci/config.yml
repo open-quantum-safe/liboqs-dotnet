@@ -41,7 +41,7 @@ jobs:
   macOS:
     description: A template for running liboqs-dotnet tests on x64 macOS machines
     macos:
-      xcode: "11.3.0"
+      xcode: "13.2.1"
     steps:
       - checkout # change this from "checkout" to "*localCheckout" when running CircleCI locally
       - run:
