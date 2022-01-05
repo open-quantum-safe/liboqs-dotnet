@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>    
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PreBuildEvent>copy $(SolutionDir)x64\oqs.dll $(TargetDir)</PreBuildEvent>
   </PropertyGroup>
 
