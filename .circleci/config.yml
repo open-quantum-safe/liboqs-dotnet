@@ -33,10 +33,10 @@ jobs:
           command: .circleci/build_liboqs.sh
       - run:
           name: Build wrapper
-          command: dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f netstandard2.1 -c Release -o bin/Release/dotnetOQS-netstandard2.1
+          command: dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f net6.0 -c Release -o bin/Release/dotnetOQS-net6.0
       - run:
           name: Build and run test app
-          command: scripts/linux_sample_netcoreapp2.1_x64_build.sh && ./bin/Release/dotnetOQSSample-netcoreapp2.1-linux-x64/dotnetOQSSample
+          command: scripts/linux_sample_net6.0_x64_build.sh && ./bin/Release/dotnetOQSSample-net6.0-linux-x64/dotnetOQSSample
 
   macOS:
     description: A template for running liboqs-dotnet tests on x64 macOS machines
@@ -57,10 +57,10 @@ jobs:
           command: .circleci/build_liboqs.sh
       - run:
           name: Build wrapper
-          command: export PATH=~/.dotnet:$PATH && dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f netstandard2.1 -c Release -o bin/Release/dotnetOQS-netstandard2.1
+          command: export PATH=~/.dotnet:$PATH && dotnet build dotnetOQS/dotnetOQS.csproj /p:Platform=AnyCPU -f net6.0 -c Release -o bin/Release/dotnetOQS-net6.0
       - run:
           name: Build and run test app
-          command: export PATH=~/.dotnet:$PATH && scripts/macos_sample_netcoreapp2.1_x64_build.sh && ./bin/Release/dotnetOQSSample-netcoreapp2.1-osx-x64/dotnetOQSSample
+          command: export PATH=~/.dotnet:$PATH && scripts/macos_sample_net6.0_x64_build.sh && ./bin/Release/dotnetOQSSample-net6.0-osx-x64/dotnetOQSSample
 
 workflows:
   version: 2.1
