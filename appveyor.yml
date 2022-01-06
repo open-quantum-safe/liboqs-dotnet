@@ -1,6 +1,6 @@
 version: 1.0.{build}
 
-image: Visual Studio 2019
+image: Visual Studio 2022
 
 platform: x64
 
@@ -13,7 +13,7 @@ environment:
 
 before_build:
   - cmd: |-
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+      call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
       set PATH=%APPVEYOR_BUILD_FOLDER%\%PLATFORM%;%PATH%
       git clone https://github.com/open-quantum-safe/liboqs %LIBOQS_INSTALL_PATH%
       mkdir %LIBOQS_BUILD_DIR%
