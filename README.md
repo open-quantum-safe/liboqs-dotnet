@@ -47,7 +47,7 @@ liboqs-dotnet is provided "as is", without warranty of any kind.  See [LICENSE.t
 Building
 --------
 
-Builds are tested using the Appveyor continuous integration system Visual Studio 2019.  Builds have been tested manually on Windows 11 with Visual Studio 2022, Linux (Ubuntu 18.04 LTS) and macOS Mojave.
+Builds are tested using the Appveyor continuous integration system Visual Studio 2022.  Builds have been tested manually on Windows 11 with Visual Studio 2022, Linux (Ubuntu 18.04 LTS) and macOS Mojave.
 
 ### Prerequisites
 
