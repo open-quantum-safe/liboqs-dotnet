@@ -33,6 +33,6 @@ configuration:
   - Release
 
 test_script:
-  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%CONFIGURATION%\netcoreapp1.1\dotnetOQSSample.dll
-  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%CONFIGURATION%\netcoreapp1.1\dotnetOQSUnitTest.dll
+  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSSample\bin\%CONFIGURATION%\net6.0\dotnetOQSSample.dll
+  - dotnet %APPVEYOR_BUILD_FOLDER%\dotnetOQSUnitTest\bin\%CONFIGURATION%\net6.0\dotnetOQSUnitTest.dll
 
