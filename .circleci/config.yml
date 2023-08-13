@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            env HOMEBREW_NO_AUTO_UPDATE=1 brew install cmake ninja mono-libgdiplus
+            env HOMEBREW_NO_AUTO_UPDATE=1 brew install cmake ninja mono-libgdiplus openssl
             curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel LTS > dotnetinstall.log ; cat dotnetinstall.log
       - run:
           name: Clone liboqs
