@@ -41,13 +41,13 @@ jobs:
   macOS:
     description: A template for running liboqs-dotnet tests on x64 macOS machines
     macos:
-      xcode: "13.2.0"
+      xcode: "14.3.1"
     steps:
       - checkout # change this from "checkout" to "*localCheckout" when running CircleCI locally
       - run:
           name: Install dependencies
           command: |
-            env HOMEBREW_NO_AUTO_UPDATE=1 brew install cmake ninja mono-libgdiplus
+            env HOMEBREW_NO_AUTO_UPDATE=1 brew install cmake ninja mono-libgdiplus openssl
             curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel LTS > dotnetinstall.log ; cat dotnetinstall.log
       - run:
           name: Clone liboqs
