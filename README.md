@@ -118,6 +118,8 @@ The sample program can be ran using the command line or Visual Studio (on Window
 
 The unit tests can be run using Visual Studio's "Test" menu. It is currently not possible to use `dotnet test` on Linux to execute the test case.
 
+Please note the Classic McEliece algorithm requires a large stack.  If you experience a stack overflow exception, [try use editbin.exe to enlarge the stack size](https://github.com/open-quantum-safe/liboqs-dotnet/issues/25#issuecomment-1157162145).  The unit test project tests all algorithm including the Classic McEliece, so a PostBuildEvent PowerShell script is included to change the stack size of testhost.exe.  You will need install C and C++ support in Visual Studio for this script to locate editbin; alternatively, you can add editbin's path to the PATH environment variable.
+
 Troubleshooting
 ---------------
 
