@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQuantumSafe;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
+using System.Diagnostics;
 
 namespace dotnetOQSUnitTest
 {
@@ -88,16 +90,28 @@ namespace dotnetOQSUnitTest
         public void TestAllKEMs()
         {
             var failedAlgs = new List<string>();
-            foreach (string kem in KEM.EnabledMechanisms)
+            var threadWith50MStack = new Thread(new ThreadStart(() =>
             {
-                try {
-                    TestKEM(kem);
-                }
-                catch (Exception)
+                foreach (string kem in KEM.EnabledMechanisms)
                 {
-                    failedAlgs.Add(kem);
+                    try
+                    {
+                        var stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        TestKEM(kem);
+                        stopwatch.Stop();
+                        var msg = $"KEM {kem} took {stopwatch.ElapsedMilliseconds:n0}ms";
+                        Debug.WriteLine(msg);
+                        log(msg);
+                    }
+                    catch (Exception ex)
+                    {
+                        failedAlgs.Add($"{kem}-{ex.Message}");
+                    }
                 }
-            }
+            }), 2 * 1024 * 1024);
+            threadWith50MStack.Start();
+            threadWith50MStack.Join();
             Assert.IsTrue(failedAlgs.Count == 0, string.Join(", ", failedAlgs));
         }
 
