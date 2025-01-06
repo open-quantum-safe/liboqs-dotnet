@@ -6,7 +6,7 @@ liboqs-dotnet
 
 ## <span style="color: red;">DEPRECATION NOTICE</span>
 
-<b><span style="color: red;">The Open Quantum Safe project has discontinued development of our liboqs-dotnet language wrapper.  This repository is being archived as read-only.  Use of this code is not recommended, as it may rely on obsolete algorithms or implementations or may have security vulnerabilities or other bugs.</span></b>
+<b><span style="color: red;">The Open Quantum Safe project has discontinued development of our liboqs-dotnet language wrapper.  This repository is being archived as read-only.  Use of this code is not recommended, as it may rely on obsolete algorithms or implementations or may have security vulnerabilities or other bugs. If you are interested in reviving and maintaining this project, please reach out via the [OQS discussion board on Github](https://github.com/orgs/open-quantum-safe/discussions).</span></b>
 
 ---
 
